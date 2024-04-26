@@ -29,6 +29,12 @@ Scenario Outline: Divide two numbers
 	| 10      | 2       | 5                     |
 	| 10      | 0       | Cannot divide by zero |
 
+Scenario: Divide two numbers with throw exception on divide by zero
+	Given the first number is 10
+	And the second number is 0
+	When numbers are divided bis
+	Then the operation should throw an exception, with the message Cannot divide by zero
+
 
 # Scenario with N numbers
 
@@ -77,6 +83,8 @@ Scenario: Divide N numbers - with divide by zero
 	When numbers are divided
 	Then the result should be Cannot divide by zero
 
+# Scenario with formula
+
 Scenario: Calculate Formula with N numbers and N operators without priority, ex: 10*2+5-4=21
 Given formula is 
 	| Operator | Numbers |
@@ -97,4 +105,7 @@ Given formula is
 	When formula is computed
 	Then the result should be Cannot divide by zero
 
-
+Scenario: Calcuate a formula with another startegy, and priority handled
+	Given formula is 1+3-4*8
+	When formula with priority is computed
+	Then the result should be -28

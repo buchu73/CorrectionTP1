@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace CalculatorLibrary
 {
@@ -56,9 +59,27 @@ namespace CalculatorLibrary
             }
         }
 
+        public string DivideWithThrow(List<int> numbers)
+        {
+            try
+            {
+                int result = numbers[0];
+                for (int i = 1; i != numbers.Count; ++i)
+                {
+                    result /= numbers[i];
+                }
+
+                return result.ToString();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Cannot divide by zero");
+            }
+        }
+
         public string ComputeFormula(List<int> inputNumbers, List<string> operators)
         {
-            //10*2+5-4=21
+            // 10*2+5-4=21
             // result = 10*2
             // result = result + 5
             // result = result - 4
@@ -104,6 +125,26 @@ namespace CalculatorLibrary
             }
 
             return result;
+        }
+
+        public string ComputePriorityFormula(string formulaToCompute)
+        {
+            try
+            {
+                var script = CSharpScript.Create<double>(formulaToCompute);
+                var compilation = script.RunAsync().Result;
+                return compilation.ReturnValue.ToString();
+            }
+            catch (CompilationErrorException ex)
+            {
+                Console.WriteLine($"Error compiling expression: {ex.Message}");
+                return double.NaN.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error evaluating expression: {ex.Message}");
+                return double.NaN.ToString();
+            }
         }
     }
 }

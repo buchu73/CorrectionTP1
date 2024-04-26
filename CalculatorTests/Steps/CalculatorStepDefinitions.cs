@@ -2,6 +2,7 @@
 using CalculatorLibrary;
 using FluentAssertions;
 using System.Collections.Generic;
+using System;
 
 namespace SpecFlowProject1.Steps
 {
@@ -13,7 +14,10 @@ namespace SpecFlowProject1.Steps
 
         private readonly List<int> _inputNumbers = new List<int>();
         private readonly List<string> _operators = new List<string>();
+        private string _formula;
         private string _result;
+
+        #region Given
 
         [Given(@"the first number is (.*)")]
         public void GivenTheFirstNumberIs(int number)
@@ -53,6 +57,15 @@ namespace SpecFlowProject1.Steps
             }
         }
 
+        [Given(@"formula is (.*)")]
+        public void GivenFormulaIs(string formula)
+        {
+            _formula = formula;
+        }
+
+        #endregion
+
+        #region When steps
 
         [When("numbers are added")]
         public void WhenNumbersAreAdded()
@@ -82,6 +95,20 @@ namespace SpecFlowProject1.Steps
             this._result = calculator.Divide(this._inputNumbers);
         }
 
+        [When(@"numbers are divided bis")]
+        public void WhenNumbersAreDividedBis()
+        {
+            Calculator calculator = new Calculator();
+            try
+            {
+                this._result = calculator.DivideWithThrow(this._inputNumbers);
+            }
+            catch (Exception e)
+            {
+                this._result = e.Message;
+            }
+        }
+
         [When(@"formula is computed")]
         public void WhenFormulaIsComputed()
         {
@@ -89,10 +116,20 @@ namespace SpecFlowProject1.Steps
             this._result = calculator.ComputeFormula(this._inputNumbers, this._operators);
         }
 
+        [When(@"formula with priority is computed")]
+        public void WhenFormulaWithPriorityIsComputed()
+        {
+            Calculator calculator = new Calculator();
+            this._result = calculator.ComputePriorityFormula(_formula);
+        }
+
+        #endregion
+
         [Then("the result should be (.*)")]
+        [Then(@"the operation should throw an exception, with the message (.*)")]
         public void ThenTheResultShouldBe(string result)
         {
             this._result.Should().Be(result);
-        }      
+        }
     }
 }
