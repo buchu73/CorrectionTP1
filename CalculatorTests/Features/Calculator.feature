@@ -3,7 +3,9 @@ Simple calculator
 
 Scenario: Add two numbers
 	Given the first number is 50
+	And the first word is toto
 	And the second number is 70
+	And the number is 50 and the second number is 70
 	When numbers are added
 	Then the result should be 120
 

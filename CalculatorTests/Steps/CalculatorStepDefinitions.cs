@@ -25,6 +25,16 @@ namespace SpecFlowProject1.Steps
             this._inputNumbers.Insert(0, number);
         }
 
+        [Given(@"the first word is (.*)")]
+        public void GivenTheFirstWordIs(string word)
+        {
+        }
+
+        [Given(@"the number is (.*) and the second number is (.*)")]
+        public void GivenTheFirstAndSecondNumberIs(int number1, int number2)
+        {
+        }
+
         [Given(@"the second number is (.*)")]
         public void GivenTheSecondNumberIs(int number)
         {
