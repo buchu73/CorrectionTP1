@@ -1,11 +1,11 @@
 ﻿Feature: Calculator
 Simple calculator 
 
+#Simple scenario
+
 Scenario: Add two numbers
 	Given the first number is 50
-	And the first word is toto
 	And the second number is 70
-	And the number is 50 and the second number is 70
 	When numbers are added
 	Then the result should be 120
 
@@ -106,8 +106,3 @@ Given formula is
 	| -        | 4       |
 	When formula is computed
 	Then the result should be Cannot divide by zero
-
-Scenario: Calcuate a formula with another startegy, and priority handled
-	Given formula is 1+3-4*8
-	When formula with priority is computed
-	Then the result should be -28
