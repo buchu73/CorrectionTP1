@@ -126,25 +126,5 @@ namespace CalculatorLibrary
 
             return result;
         }
-
-        public string ComputePriorityFormula(string formulaToCompute)
-        {
-            try
-            {
-                var script = CSharpScript.Create<double>(formulaToCompute);
-                var compilation = script.RunAsync().Result;
-                return compilation.ReturnValue.ToString();
-            }
-            catch (CompilationErrorException ex)
-            {
-                Console.WriteLine($"Error compiling expression: {ex.Message}");
-                return double.NaN.ToString();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error evaluating expression: {ex.Message}");
-                return double.NaN.ToString();
-            }
-        }
     }
 }
